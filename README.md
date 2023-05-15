@@ -1,6 +1,6 @@
 # Next Tac Toe
 
-### Classic tic tac toe build for the web with NextJS13
+### Classic tic tac toe build for the web with NextJS 13
 
 ---
 
