@@ -1,0 +1,13 @@
+.tile {
+  border: 2px solid black;
+  height: 3rem;
+  width: 3rem;
+}
+
+.tile > p {
+  font-weight: bolder;
+  font-size: xx-large;
+  text-align: center;
+  line-height: 3rem;
+  margin: 0;
+}

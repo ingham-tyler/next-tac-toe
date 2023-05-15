@@ -1,95 +1,89 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+
+import { useState } from "react";
+import Tile from "./components/Tile";
+
+import styles from "./page.module.css";
+
+const checkForWinner = (board: Array<string>): string | null => {
+  const winningSets = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (let i = 0; i < winningSets.length; i++) {
+    const [a, b, c] = winningSets[i];
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+      return board[a];
+    }
+  }
+
+  return null;
+};
 
 export default function Home() {
+  const [tiles, setTiles] = useState<Array<string>>(Array(9).fill(null));
+  const [isPlayerTurn, setIsPlayerTurn] = useState<boolean>(true);
+
+  const handleTileClick = (index: number): void => {
+    const copyTiles = tiles.slice();
+    const copyIsPlayerTurn = isPlayerTurn;
+
+    if (copyTiles[index] || checkForWinner(copyTiles)) {
+      return;
+    }
+
+    copyIsPlayerTurn ? (copyTiles[index] = "X") : (copyTiles[index] = "O");
+
+    setTiles(copyTiles);
+    setIsPlayerTurn(!copyIsPlayerTurn);
+  };
+
+  const handleResetClick = (): void => {
+    const newBoard = Array(9).fill(null);
+    const copyIsPlayerTurn = isPlayerTurn;
+
+    setTiles(newBoard);
+    setIsPlayerTurn(!copyIsPlayerTurn);
+  };
+
+  const isGameOver = checkForWinner(tiles);
+  let gameStatusMsg = "Next Tac Toe";
+  if (isGameOver) {
+    !isPlayerTurn ? (gameStatusMsg = "X Wins!") : (gameStatusMsg = "O Wins!");
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className={styles.game}>
+      <div className={styles.gameStatus}>
+        <h1>{gameStatusMsg}</h1>
+      </div>
+      <div className={styles.board}>
+        <div className={styles.boardRow}>
+          <Tile value={tiles[0]} onTileClick={() => handleTileClick(0)} />
+          <Tile value={tiles[1]} onTileClick={() => handleTileClick(1)} />
+          <Tile value={tiles[2]} onTileClick={() => handleTileClick(2)} />
+        </div>
+        <div className={styles.boardRow}>
+          <Tile value={tiles[3]} onTileClick={() => handleTileClick(3)} />
+          <Tile value={tiles[4]} onTileClick={() => handleTileClick(4)} />
+          <Tile value={tiles[5]} onTileClick={() => handleTileClick(5)} />
+        </div>
+        <div className={styles.boardRow}>
+          <Tile value={tiles[6]} onTileClick={() => handleTileClick(6)} />
+          <Tile value={tiles[7]} onTileClick={() => handleTileClick(7)} />
+          <Tile value={tiles[8]} onTileClick={() => handleTileClick(8)} />
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={styles.menu}>
+        <button onClick={handleResetClick}>Reset</button>
       </div>
     </main>
-  )
+  );
 }
