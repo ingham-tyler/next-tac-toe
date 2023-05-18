@@ -1,3 +1,5 @@
+import Head from "next/head";
+import Footer from "./components/Footer/Footer";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -15,7 +17,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <body className={inter.className} id="main">
+        {children}
+        <footer>
+          <Footer />
+        </footer>
+      </body>
     </html>
   );
 }

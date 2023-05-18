@@ -1,0 +1,9 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.heading > h3 {
+  font-weight: normal;
+}

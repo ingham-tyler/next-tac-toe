@@ -349,3 +349,8 @@ template {
 [hidden] {
   display: none;
 }
+
+/**    END NORMALIZE.CSS     */
+#main {
+  min-height: 100vh;
+}

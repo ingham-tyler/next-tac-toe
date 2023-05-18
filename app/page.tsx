@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Tile from "./components/Tile";
+import Tile from "./components/Tile/Tile";
 
 import styles from "./page.module.css";
 
-const checkForWinner = (board: Array<string>): string | null => {
+const BOARD_SIZE = 9;
+
+const checkForWinner = (board: Array<string>): string | boolean => {
   const winningSets = [
     [0, 1, 2],
     [3, 4, 5],
@@ -24,7 +26,18 @@ const checkForWinner = (board: Array<string>): string | null => {
     }
   }
 
-  return null;
+  // cat's game
+  let count = 0;
+  for (let j = 0; j < BOARD_SIZE; j++) {
+    if (board[j]) {
+      count++;
+    }
+  }
+  if (count === BOARD_SIZE) {
+    return true;
+  }
+
+  return false;
 };
 
 export default function Home() {
@@ -33,7 +46,7 @@ export default function Home() {
 
   const handleTileClick = (index: number): void => {
     const copyTiles = tiles.slice();
-    const copyIsPlayerTurn = isPlayerTurn;
+    const copyIsPlayerTurn = Boolean(isPlayerTurn);
 
     if (copyTiles[index] || checkForWinner(copyTiles)) {
       return;
@@ -47,22 +60,27 @@ export default function Home() {
 
   const handleResetClick = (): void => {
     const newBoard = Array(9).fill(null);
-    const copyIsPlayerTurn = isPlayerTurn;
 
     setTiles(newBoard);
-    setIsPlayerTurn(!copyIsPlayerTurn);
+    setIsPlayerTurn(true);
   };
 
   const isGameOver = checkForWinner(tiles);
   let gameStatusMsg = "Next Tac Toe";
-  if (isGameOver) {
-    !isPlayerTurn ? (gameStatusMsg = "X Wins!") : (gameStatusMsg = "O Wins!");
+  if (typeof isGameOver === "string") {
+    gameStatusMsg = `${isGameOver} Wins!`;
+  } else if (isGameOver) {
+    gameStatusMsg = "Cat's Game!";
   }
+
+  const gameTurnMsg = isPlayerTurn ? "X's turn" : "O's turn";
+  const gameOverMsg = "Game Over!";
 
   return (
     <main className={styles.game}>
       <div className={styles.gameStatus}>
         <h1>{gameStatusMsg}</h1>
+        <h3>{isGameOver ? gameOverMsg : gameTurnMsg}</h3>
       </div>
       <div className={styles.board}>
         <div className={styles.boardRow}>
@@ -83,6 +101,9 @@ export default function Home() {
       </div>
       <div className={styles.menu}>
         <button onClick={handleResetClick}>Reset</button>
+        <a type="button" href="/about">
+          <button>About</button>
+        </a>
       </div>
     </main>
   );

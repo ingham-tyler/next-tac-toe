@@ -7,6 +7,12 @@
 
 .gameStatus {
   align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.gameStatus * {
+  align-self: center;
 }
 
 .board {
@@ -28,4 +34,8 @@
 
 .menu {
   align-self: center;
+}
+
+.menu * {
+  margin: 2px;
 }
