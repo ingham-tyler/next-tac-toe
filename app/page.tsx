@@ -78,10 +78,10 @@ export default function Home() {
 
   return (
     <main className={styles.game}>
-      <div className={styles.gameStatus}>
+      <header className={styles.gameStatus}>
         <h1>{gameStatusMsg}</h1>
         <h3>{isGameOver ? gameOverMsg : gameTurnMsg}</h3>
-      </div>
+      </header>
       <div className={styles.board}>
         <div className={styles.boardRow}>
           <Tile value={tiles[0]} onTileClick={() => handleTileClick(0)} />

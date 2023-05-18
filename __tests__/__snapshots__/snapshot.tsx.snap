@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div>
+  <main
+    class="game"
+  >
+    <header
+      class="gameStatus"
+    >
+      <h1>
+        Next Tac Toe
+      </h1>
+      <h3>
+        X's turn
+      </h3>
+    </header>
+    <div
+      class="board"
+    >
+      <div
+        class="boardRow"
+      >
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+      </div>
+      <div
+        class="boardRow"
+      >
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+      </div>
+      <div
+        class="boardRow"
+      >
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+        <div
+          class="tile"
+        >
+          <p />
+        </div>
+      </div>
+    </div>
+    <div
+      class="menu"
+    >
+      <button>
+        Reset
+      </button>
+      <a
+        href="/about"
+        type="button"
+      >
+        <button>
+          About
+        </button>
+      </a>
+    </div>
+  </main>
+</div>
+`;
